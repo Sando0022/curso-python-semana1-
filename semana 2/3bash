@@ -1,0 +1,8 @@
+git add semana2/ParteA_TablaDiagrama.pdf
+git commit -m "docs: agregar diseño de la taquilla"
+
+git add semana2/taquilla_museo.ipynb
+git commit -m "feat: implementar taquilla del museo"
+
+git add README.md
+git commit -m "docs: actualizar README para semana 2"
