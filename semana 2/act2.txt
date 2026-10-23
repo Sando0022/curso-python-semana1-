@@ -1,0 +1,87 @@
+# Constantes
+PRECIO_MENOR_3 = 0.00
+PRECIO_MENOR_18 = 30.00
+PRECIO_ADULTO = 45.00
+
+DESCUENTO_ADULTO_MAYOR = 0.12
+DESCUENTO_ESTUDIANTE = 0.10
+DESCUENTO_PROFESOR = 0.10
+DESCUENTO_NINGUNO = 0.00
+
+# Contador y acumuladores
+visitantes_cobrados = 0
+total_descuentos = 0.00
+total_a_pagar = 0.00
+
+print("=== TAQUILLA DEL MUSEO ===")
+
+while True:
+    entrada = input(
+        "Edad del visitante (o 'fin' para cerrar la taquilla): "
+    ).strip().lower()
+
+    if entrada == "fin":
+        break
+
+    try:
+        edad = int(entrada)
+    except ValueError:
+        print("Entrada inválida. Escribe una edad entera o 'fin'.")
+        continue
+
+    if edad < 0 or edad > 110:
+        print("Edad no válida. No se cobra.")
+        continue
+
+    precio_base = 0.00
+    descuento = 0.00
+    tipo = ""
+
+    if edad < 3:
+        precio_base = PRECIO_MENOR_3
+        tipo = "Menor de 3 (gratis)"
+
+    elif edad < 18:
+        precio_base = PRECIO_MENOR_18
+        tipo = "Menor de edad"
+
+    else:
+        precio_base = PRECIO_ADULTO
+
+        if edad >= 60:
+            tipo = "Adulto mayor"
+            descuento = precio_base * DESCUENTO_ADULTO_MAYOR
+
+        else:
+            opcion = input(
+                "Tipo: 1) Estudiante 2) Profesor 3) Ninguno: "
+            ).strip()
+
+            if opcion == "1":
+                tipo = "Estudiante"
+                descuento = precio_base * DESCUENTO_ESTUDIANTE
+
+            elif opcion == "2":
+                tipo = "Profesor"
+                descuento = precio_base * DESCUENTO_PROFESOR
+
+            else:
+                tipo = "Ninguno"
+                descuento = precio_base * DESCUENTO_NINGUNO
+
+    paga = precio_base - descuento
+
+    print(
+        f"Visitante {visitantes_cobrados + 1} | Edad: {edad} | "
+        f"{tipo} | Base: ${precio_base:.2f} | "
+        f"Descuento: ${descuento:.2f} | A pagar: ${paga:.2f}"
+    )
+
+    visitantes_cobrados += 1
+    total_descuentos += descuento
+    total_a_pagar += paga
+
+print("\n=== CORTE DE CAJA ===")
+print(f"Visitantes cobrados: {visitantes_cobrados}")
+print(f"Total en descuentos: ${total_descuentos:.2f}")
+print(f"TOTAL A PAGAR: ${total_a_pagar:.2f}")
